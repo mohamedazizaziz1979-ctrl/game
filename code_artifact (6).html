@@ -1,0 +1,1472 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LingoLearn - الدرس الثالث الوحدة الأولى</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Fredoka:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            500: '#22c55e',
+                            600: '#16a34a',
+                            700: '#15803d',
+                            dark: '#0f172a',
+                            card: '#1e293b'
+                        }
+                    },
+                    fontFamily: {
+                        arabic: ['Cairo', 'sans-serif'],
+                        english: ['Fredoka', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #0f172a 100%);
+            min-height: 100vh;
+            color: #f8fafc;
+            user-select: none;
+        }
+
+        .en-text {
+            font-family: 'Fredoka', sans-serif;
+            direction: ltr;
+            display: inline-block;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(15, 23, 42, 0.6);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #475569;
+        }
+
+        /* Glassmorphism Card Effect */
+        .glass-card {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Floating & Glowing Animations */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+        }
+        .animate-float {
+            animation: float 4s ease-in-out infinite;
+        }
+
+        .glow-green {
+            box-shadow: 0 0 20px rgba(34, 197, 94, 0.35);
+        }
+        .glow-purple {
+            box-shadow: 0 0 20px rgba(168, 85, 247, 0.35);
+        }
+        .glow-amber {
+            box-shadow: 0 0 20px rgba(245, 158, 11, 0.35);
+        }
+        .glow-cyan {
+            box-shadow: 0 0 20px rgba(6, 182, 212, 0.45);
+        }
+        .glow-red {
+            box-shadow: 0 0 20px rgba(239, 68, 68, 0.5);
+        }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen text-slate-100 antialiased overflow-x-hidden">
+
+    <!-- Canvas for particle celebrations -->
+    <canvas id="confettiCanvas" class="fixed inset-0 pointer-events-none z-50"></canvas>
+
+    <!-- Top Navigation Header -->
+    <header class="w-full glass-card sticky top-0 z-40 border-b border-slate-800/80 px-4 py-3">
+        <div class="max-w-6xl mx-auto flex flex-wrap items-center justify-between gap-3">
+            <!-- Game Title & Unit Info -->
+            <div class="flex items-center gap-3">
+                <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-rose-600 via-amber-500 to-emerald-500 flex items-center justify-center text-white font-black text-xl shadow-lg glow-red shrink-0">
+                    <i class="fa-solid fa-gamepad text-white animate-pulse"></i>
+                </div>
+                <div>
+                    <div class="flex items-center gap-2">
+                        <span class="bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 text-[11px] font-extrabold px-2.5 py-0.5 rounded-full flex items-center gap-1 shadow-sm">
+                            <i class="fa-solid fa-book-bookmark text-emerald-400"></i>
+                            الوحدة الأولى • الدرس الثالث
+                        </span>
+                    </div>
+                    <h1 class="text-xl sm:text-2xl font-black bg-gradient-to-r from-emerald-400 via-teal-300 to-cyan-400 bg-clip-text text-transparent mt-0.5 en-text tracking-wide">
+                        LingoLearn
+                    </h1>
+                    <div class="flex flex-wrap items-center gap-2 mt-0.5">
+                        <p class="text-xs text-slate-400 hidden sm:inline">تعلم الانجليزية بالألعاب التفاعلية والصوت البريطاني</p>
+                        <span class="text-slate-600 hidden sm:inline">•</span>
+                        <span class="text-xs font-bold text-rose-400 bg-rose-950/70 border border-rose-500/40 px-2.5 py-0.5 rounded-full shadow-sm flex items-center gap-1">
+                            <i class="fa-solid fa-user-tie text-rose-400 text-[10px]"></i>
+                            إعداد: مستر محمد عبد العزيز
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Global Score Board -->
+            <div class="flex items-center gap-2 sm:gap-4 bg-slate-900/80 px-4 py-1.5 rounded-full border border-slate-700/60 text-xs sm:text-sm">
+                <div class="flex items-center gap-1.5 text-amber-400 font-bold" title="إجمالي النقاط">
+                    <i class="fa-solid fa-trophy"></i>
+                    <span id="globalScore">0</span>
+                </div>
+                <div class="w-px h-4 bg-slate-700"></div>
+                <div class="flex items-center gap-1.5 text-emerald-400 font-bold" title="التتابع الصحيح">
+                    <i class="fa-solid fa-fire"></i>
+                    <span id="globalStreak">0</span>
+                </div>
+                <div class="w-px h-4 bg-slate-700"></div>
+                <button id="soundToggle" onclick="toggleSound()" class="text-slate-400 hover:text-amber-400 transition-colors p-1" title="تشغيل / كتم الصوت">
+                    <i id="soundIcon" class="fa-solid fa-volume-high"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-grow max-w-5xl w-full mx-auto p-4 sm:p-6 flex flex-col items-center">
+
+        <!-- Game Mode Selection Navigation -->
+        <nav class="w-full grid grid-cols-2 sm:grid-cols-4 gap-2 mb-6 p-1.5 bg-slate-900/60 rounded-2xl border border-slate-800">
+            <button onclick="switchMode('match')" id="tab-match" class="tab-btn flex items-center justify-center gap-2 py-3 px-3 rounded-xl font-bold text-xs sm:text-sm transition-all duration-200 text-slate-400 hover:text-white">
+                <i class="fa-solid fa-puzzle-piece text-red-500 text-base drop-shadow-[0_0_8px_rgba(239,68,68,0.7)]"></i>
+                <span>لعبة المطابقة</span>
+            </button>
+            <button onclick="switchMode('blanks')" id="tab-blanks" class="tab-btn flex items-center justify-center gap-2 py-3 px-3 rounded-xl font-bold text-xs sm:text-sm transition-all duration-200 text-slate-400 hover:text-white">
+                <i class="fa-solid fa-pen-to-square text-red-500 text-base drop-shadow-[0_0_8px_rgba(239,68,68,0.7)]"></i>
+                <span>حروف الجر</span>
+            </button>
+            <button onclick="switchMode('quiz')" id="tab-quiz" class="tab-btn flex items-center justify-center gap-2 py-3 px-3 rounded-xl font-bold text-xs sm:text-sm transition-all duration-200 text-slate-400 hover:text-white">
+                <i class="fa-solid fa-bolt text-red-500 text-base drop-shadow-[0_0_8px_rgba(239,68,68,0.7)]"></i>
+                <span>التحدي السريع</span>
+            </button>
+            <button onclick="switchMode('crossword')" id="tab-crossword" class="tab-btn flex items-center justify-center gap-2 py-3 px-3 rounded-xl font-bold text-xs sm:text-sm transition-all duration-200 text-slate-400 hover:text-white">
+                <i class="fa-solid fa-table-cells text-red-500 text-base drop-shadow-[0_0_8px_rgba(239,68,68,0.7)]"></i>
+                <span>كلمات متقاطعة</span>
+            </button>
+        </nav>
+
+        <!-- MODE 1: CARD MATCHING GAME SECTION -->
+        <section id="mode-match" class="w-full flex flex-col items-center">
+            <div class="w-full glass-card rounded-2xl p-4 mb-6 flex items-center justify-between border border-slate-800">
+                <div class="flex items-center gap-3">
+                    <div class="text-xs text-slate-400">المحاولات: <span id="matchMoves" class="font-bold text-white text-sm">0</span></div>
+                    <div class="text-xs text-slate-400">المتطابق: <span id="matchPairsFound" class="font-bold text-emerald-400 text-sm">0/6</span></div>
+                </div>
+                <button onclick="initMatchGame()" class="px-4 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold rounded-xl border border-slate-700 transition-all flex items-center gap-2">
+                    <i class="fa-solid fa-arrows-rotate"></i> إعادة اللعب
+                </button>
+            </div>
+            <div id="matchingGrid" class="w-full grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+                <!-- Cards dynamically populated -->
+            </div>
+        </section>
+
+        <!-- MODE 2: PREPOSITIONS & MISSING WORDS -->
+        <section id="mode-blanks" class="w-full hidden flex-col items-center max-w-xl">
+            <div class="w-full bg-slate-800/80 rounded-full h-2.5 mb-6 overflow-hidden p-0.5 border border-slate-700">
+                <div id="blanksProgressBar" class="bg-gradient-to-r from-purple-500 to-pink-500 h-full rounded-full transition-all duration-300" style="width: 10%"></div>
+            </div>
+
+            <div class="w-full glass-card rounded-3xl p-6 sm:p-8 border border-slate-700/80 shadow-2xl flex flex-col items-center text-center">
+                <span class="bg-purple-500/10 text-purple-300 border border-purple-500/30 text-xs px-3 py-1 rounded-full font-bold mb-4">
+                    اختر الكلمة أو حرف الجر المناسب لـ (الدرس الثالث)
+                </span>
+
+                <div class="my-6">
+                    <h2 id="blankSentence" class="en-text text-2xl sm:text-3xl font-extrabold text-white tracking-wide leading-relaxed">
+                        --
+                    </h2>
+                    <p id="blankArabicHint" class="text-slate-300 text-base sm:text-lg font-semibold mt-4">
+                        --
+                    </p>
+                </div>
+
+                <div id="blankOptions" class="w-full grid grid-cols-2 gap-3 mt-4">
+                    <!-- Dynamic option buttons -->
+                </div>
+            </div>
+
+            <div class="mt-4 flex justify-end w-full">
+                <button onclick="nextBlankQuestion()" id="blankNextBtn" class="hidden px-6 py-3 bg-purple-600 hover:bg-purple-500 text-white font-bold rounded-2xl shadow-lg transition-all text-sm flex items-center gap-2 glow-purple">
+                    السؤال التالي <i class="fa-solid fa-arrow-left"></i>
+                </button>
+            </div>
+        </section>
+
+        <!-- MODE 3: SPEED QUIZ -->
+        <section id="mode-quiz" class="w-full hidden flex-col items-center max-w-xl">
+            <div class="w-full glass-card rounded-2xl p-4 mb-4 flex items-center justify-between border border-slate-800">
+                <div class="flex items-center gap-2">
+                    <i class="fa-solid fa-clock text-amber-400"></i>
+                    <span class="text-xs text-slate-400">الوقت:</span>
+                    <span id="quizTimer" class="font-extrabold text-amber-400 text-base">20s</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <span class="text-xs text-slate-400">السؤال:</span>
+                    <span id="quizQuestionNum" class="font-bold text-white text-sm">1/10</span>
+                </div>
+            </div>
+
+            <div class="w-full glass-card rounded-3xl p-6 sm:p-8 border border-slate-700/80 shadow-2xl flex flex-col items-center text-center">
+                <div class="w-full flex justify-between items-center mb-4">
+                    <span id="quizQuestionType" class="text-xs bg-slate-800 text-slate-300 px-3 py-1 rounded-full border border-slate-700 font-semibold">
+                        ترجم التعبير الآتي
+                    </span>
+                    <button onclick="speakText(currentQuizQuestion().promptText)" id="quizAudioBtn" class="w-8 h-8 rounded-full bg-slate-800 text-emerald-400 hover:bg-emerald-500 hover:text-slate-950 transition-all flex items-center justify-center text-sm" title="نطق بصوت بريطاني">
+                        <i class="fa-solid fa-volume-high"></i>
+                    </button>
+                </div>
+
+                <h2 id="quizPrompt" class="text-2xl sm:text-3xl font-extrabold text-white my-4 leading-relaxed">
+                    --
+                </h2>
+
+                <div id="quizOptions" class="w-full flex flex-col gap-3 mt-4">
+                    <!-- Dynamic choices -->
+                </div>
+            </div>
+        </section>
+
+        <!-- MODE 4: ENHANCED CROSSWORD PUZZLE -->
+        <section id="mode-crossword" class="w-full hidden flex-col items-center max-w-4xl">
+            <div class="w-full glass-card rounded-2xl p-4 mb-6 flex flex-wrap items-center justify-between gap-3 border border-slate-800">
+                <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 rounded-lg bg-emerald-500/20 border border-emerald-500/40 text-emerald-400 flex items-center justify-center font-bold text-sm">
+                        <i class="fa-solid fa-spell-check"></i>
+                    </div>
+                    <div>
+                        <div class="text-xs text-slate-400">الكلمات المكتملة (الدرس 3)</div>
+                        <div id="cwCompletedCount" class="font-extrabold text-emerald-400 text-sm sm:text-base">0 / 9</div>
+                    </div>
+                </div>
+
+                <div class="flex items-center flex-wrap gap-2">
+                    <button onclick="giveCrosswordHint()" class="px-3 py-2 bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 text-xs font-bold rounded-xl border border-amber-500/40 transition-all flex items-center gap-1.5 shadow-sm">
+                        <i class="fa-solid fa-lightbulb text-amber-400"></i> تلميح حرف
+                    </button>
+                    <button onclick="revealCrosswordWord()" class="px-3 py-2 bg-purple-500/20 hover:bg-purple-500/30 text-purple-300 text-xs font-bold rounded-xl border border-purple-500/40 transition-all flex items-center gap-1.5 shadow-sm">
+                        <i class="fa-solid fa-key text-purple-400"></i> كشف كلمة
+                    </button>
+                    <button onclick="checkCrosswordSolution(true)" class="px-3.5 py-2 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold rounded-xl transition-all shadow-md flex items-center gap-1.5 glow-green">
+                        <i class="fa-solid fa-check"></i> تحقق من الحل
+                    </button>
+                    <button onclick="initCrosswordGame()" class="px-3 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-bold rounded-xl border border-slate-700 transition-all flex items-center gap-1.5">
+                        <i class="fa-solid fa-rotate-left"></i> إعادة
+                    </button>
+                </div>
+            </div>
+
+            <!-- Active Clue Indicator Bar with Speaker Icon -->
+            <div id="cwActiveClueBanner" class="w-full bg-slate-900/90 border border-amber-500/40 rounded-2xl p-3.5 mb-5 flex items-center justify-between gap-3 shadow-lg">
+                <div class="flex items-center gap-3 overflow-hidden">
+                    <span id="cwActiveClueBadge" class="px-2.5 py-1 bg-amber-500 text-slate-950 font-black text-xs rounded-lg shrink-0">
+                        1 أفقياً
+                    </span>
+                    <p id="cwActiveClueText" class="text-xs sm:text-sm font-bold text-white truncate">
+                        اختر أي خلية في الشبكة للبدء
+                    </p>
+                </div>
+                <div class="flex items-center gap-2 shrink-0">
+                    <button onclick="speakActiveCrosswordClue()" class="w-9 h-9 rounded-xl bg-amber-500/20 hover:bg-amber-400 text-amber-300 hover:text-slate-950 transition-all flex items-center justify-center border border-amber-500/40 shadow-sm" title="استمع للتعبير بصوت Google UK English Male">
+                        <i class="fa-solid fa-volume-high text-sm"></i>
+                    </button>
+                    <button onclick="toggleCrosswordDirection()" class="px-2.5 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold rounded-lg border border-slate-700 transition-all flex items-center gap-1" title="تبديل الاتجاه (أفقياً / رأسياً)">
+                        <i class="fa-solid fa-arrows-rotate text-xs"></i> تبديل الاتجاه
+                    </button>
+                </div>
+            </div>
+
+            <div class="w-full grid grid-cols-1 md:grid-cols-12 gap-6 items-start">
+                <div class="md:col-span-7 flex flex-col items-center w-full">
+                    <div class="glass-card p-2 sm:p-4 rounded-3xl border border-slate-700/80 shadow-2xl w-full max-w-md">
+                        <div id="crosswordGrid" class="grid grid-cols-10 gap-1 aspect-square w-full select-none">
+                            <!-- 10x10 grid cells -->
+                        </div>
+                    </div>
+
+                    <div class="w-full max-w-md mt-4 p-2 bg-slate-900/80 rounded-2xl border border-slate-800 shadow-md">
+                        <div class="text-[10px] text-slate-400 text-center mb-1 font-semibold">لوحة الإدخال السريع (أو استخدم كيبورد الجهاز)</div>
+                        <div id="virtualKb" class="flex flex-wrap justify-center gap-1">
+                            <!-- Virtual keys -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="md:col-span-5 w-full flex flex-col gap-4">
+                    <div class="glass-card p-4 rounded-2xl border border-slate-700/80">
+                        <h3 class="text-emerald-400 font-bold text-sm mb-3 flex items-center gap-2">
+                            <i class="fa-solid fa-arrow-right-long"></i> أفقياً (Across)
+                        </h3>
+                        <div id="cwAcrossClues" class="flex flex-col gap-2 max-h-56 overflow-y-auto pr-1">
+                            <!-- Across Clues -->
+                        </div>
+                    </div>
+
+                    <div class="glass-card p-4 rounded-2xl border border-slate-700/80">
+                        <h3 class="text-cyan-400 font-bold text-sm mb-3 flex items-center gap-2">
+                            <i class="fa-solid fa-arrow-down-long"></i> رأسياً (Down)
+                        </h3>
+                        <div id="cwDownClues" class="flex flex-col gap-2 max-h-56 overflow-y-auto pr-1">
+                            <!-- Down Clues -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- VICTORY / GAME OVER MODAL -->
+        <div id="gameModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
+            <div class="glass-card max-w-md w-full rounded-3xl p-6 sm:p-8 border border-emerald-500/40 text-center flex flex-col items-center shadow-2xl animate-float">
+                <div class="w-20 h-20 rounded-full bg-gradient-to-tr from-amber-400 to-emerald-400 flex items-center justify-center text-slate-950 text-4xl mb-4 shadow-lg glow-green">
+                    <i class="fa-solid fa-award"></i>
+                </div>
+                <h3 id="modalTitle" class="text-2xl font-black text-white mb-2">ممتاز! أتممت التحدي 🎉</h3>
+                <p id="modalDescription" class="text-slate-300 text-sm mb-6">لقد اتقنت مفردات وتعبيرات الدرس الثالث بالكامل!</p>
+                
+                <div class="w-full bg-slate-900/80 rounded-2xl p-4 mb-6 grid grid-cols-2 gap-2 border border-slate-800 text-center">
+                    <div>
+                        <div class="text-xs text-slate-400">النقاط المكتسبة</div>
+                        <div id="modalScore" class="text-xl font-black text-amber-400">+100</div>
+                    </div>
+                    <div>
+                        <div class="text-xs text-slate-400">الدقة</div>
+                        <div id="modalAccuracy" class="text-xl font-black text-emerald-400">100%</div>
+                    </div>
+                </div>
+
+                <button onclick="closeModal()" class="w-full py-3.5 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-slate-950 font-black rounded-2xl shadow-lg transition-all text-base glow-green">
+                    متابعة اللعب
+                </button>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer Credit -->
+    <footer class="w-full border-t border-slate-800/80 bg-slate-950/60 py-4 px-4 text-center mt-auto">
+        <p class="text-xs sm:text-sm text-slate-400 font-semibold flex items-center justify-center gap-2">
+            <span>الوحدة الأولى • الدرس الثالث</span>
+            <span class="text-slate-600">•</span>
+            <span class="text-rose-400 font-bold bg-rose-950/40 px-3 py-1 rounded-full border border-rose-500/30">
+                <i class="fa-solid fa-graduation-cap text-rose-500 ml-1"></i> إعداد: مستر محمد عبد العزيز
+            </span>
+        </p>
+    </footer>
+
+    <script>
+        /* Expressions Data Source - Unit 1 Lesson 3 */
+        const expressionsData = [
+            { id: 1, english: "act in a certain way", arabic: "يتصرف بطريقة معينة", prep: "in", example: "He tends to act in a certain way when nervous.", blank: "act ___ a certain way", distractors: ["at", "on", "for"] },
+            { id: 2, english: "the loudest person", arabic: "الشخص الأكثر تحدثاً / الأكثر لفتاً للإنتباه", prep: "loudest", example: "She isn't always the loudest person in the room.", blank: "the _______ person", distractors: ["highest", "biggest", "quietest"] },
+            { id: 3, english: "over time", arabic: "مع مرور الوقت", prep: "over", example: "Your English vocabulary will improve over time.", blank: "____ time", distractors: ["under", "by", "at"] },
+            { id: 4, english: "save lives", arabic: "ينقذ الأرواح", prep: "save", example: "Doctors work tirelessly to save lives.", blank: "____ lives", distractors: ["keep", "make", "hold"] },
+            { id: 5, english: "beyond my look", arabic: "بعيداً عن مظهري الخارجي", prep: "beyond", example: "Try to understand me beyond my look.", blank: "______ my look", distractors: ["beside", "under", "inside"] },
+            { id: 6, english: "what you really are inside", arabic: "شخصيتك وجوهرك من الداخل", prep: "inside", example: "People appreciate what you really are inside.", blank: "what you really are ______", distractors: ["outside", "beside", "around"] },
+            { id: 7, english: "my voice matters", arabic: "رأيي مهم وصوتي مسموع", prep: "matters", example: "I speak up because my voice matters.", blank: "my voice _______", distractors: ["speaks", "listens", "thinks"] },
+            { id: 8, english: "follow his curiosity", arabic: "يتبع فضوله وشغفه", prep: "curiosity", example: "He decided to follow his curiosity and learn science.", blank: "follow his _________", distractors: ["interest", "way", "thought"] },
+            { id: 9, english: "fit in", arabic: "يلائم / ينسجم مع البيئة", prep: "in", example: "It takes time to fit in a new environment.", blank: "fit __", distractors: ["on", "out", "off"] },
+            { id: 10, english: "believe in", arabic: "يؤمن بـ / يثق في", prep: "in", example: "You should always believe in your abilities.", blank: "believe __", distractors: ["on", "at", "to"] }
+        ];
+
+        /* Enhanced Crossword Words with Phrase for Speech Synthesis */
+        const crosswordWords = [
+            { id: 1, number: 1, word: "CERTAIN", dir: "across", row: 0, col: 3, clue: "بطريقة محددة أو معينة (act in a _______ way)", phraseEn: "act in a certain way" },
+            { id: 2, number: 1, word: "CURIOSITY", dir: "down", row: 0, col: 3, clue: "تتبع شغفك وفضولك (follow his _________)", phraseEn: "follow his curiosity" },
+            { id: 3, number: 2, word: "LOUDEST", dir: "across", row: 1, col: 1, clue: "الشخص الأكثر تحدثاً أو لفت انتباه (the _______ person)", phraseEn: "the loudest person" },
+            { id: 4, number: 2, word: "LOOK", dir: "down", row: 1, col: 1, clue: "بعيداً عن مظهري الخارجي (beyond my ____)", phraseEn: "beyond my look" },
+            { id: 5, number: 3, word: "FOLLOW", dir: "across", row: 4, col: 2, clue: "يتبع / يلاحق شغفه (______ his curiosity)", phraseEn: "follow his curiosity" },
+            { id: 6, number: 4, word: "INSIDE", dir: "across", row: 5, col: 1, clue: "حقيقتك وجوهرك من الداخل (what you really are ______)", phraseEn: "what you really are inside" },
+            { id: 7, number: 5, word: "MATTERS", dir: "across", row: 7, col: 1, clue: "رأيي وصوتي مهم (my voice _______)", phraseEn: "my voice matters" },
+            { id: 8, number: 5, word: "MY", dir: "down", row: 7, col: 1, clue: "ضمير الملكية في: رأيي مهم (__ voice matters)", phraseEn: "my voice matters" },
+            { id: 9, number: 6, word: "BELIEVE", dir: "across", row: 9, col: 1, clue: "أن تؤمن بقدراتك (_______ in your abilities)", phraseEn: "believe in your abilities" }
+        ];
+
+        /* Global Application State */
+        let state = {
+            score: 0,
+            streak: 0,
+            soundEnabled: true,
+            activeMode: 'match',
+
+            // Matching state
+            matchCards: [],
+            selectedCards: [],
+            matchedPairs: 0,
+            matchMoves: 0,
+
+            // Blanks state
+            blankIndex: 0,
+
+            // Quiz state
+            quizIndex: 0,
+            quizQuestions: [],
+            quizTimerInterval: null,
+            quizTimeLeft: 20,
+
+            // Crossword state
+            crosswordActiveClue: null,
+            crosswordActiveCell: { r: 0, c: 3 },
+            crosswordUserInputs: {},
+            solvedWordIds: new Set()
+        };
+
+        const AudioCtx = window.AudioContext || window.webkitAudioContext;
+        let audioCtx = null;
+
+        function getAudioContext() {
+            if (!audioCtx) {
+                audioCtx = new AudioCtx();
+            }
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+            return audioCtx;
+        }
+
+        // Synthesized sound effects without external audio files
+        function playSound(type) {
+            if (!state.soundEnabled) return;
+            try {
+                const ctx = getAudioContext();
+                if (!ctx) return;
+                const now = ctx.currentTime;
+
+                if (type === 'click' || type === 'bubble') {
+                    const osc = ctx.createOscillator();
+                    const gain = ctx.createGain();
+                    
+                    osc.type = 'sine';
+                    const startFreq = 300 + Math.random() * 80;
+                    const endFreq = 1150 + Math.random() * 200;
+
+                    osc.frequency.setValueAtTime(startFreq, now);
+                    osc.frequency.exponentialRampToValueAtTime(endFreq, now + 0.08);
+
+                    gain.gain.setValueAtTime(0.01, now);
+                    gain.gain.linearRampToValueAtTime(0.3, now + 0.015);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.085);
+
+                    osc.connect(gain);
+                    gain.connect(ctx.destination);
+
+                    osc.start(now);
+                    osc.stop(now + 0.085);
+                } else if (type === 'success') {
+                    [400, 800].forEach((freq, i) => {
+                        const osc = ctx.createOscillator();
+                        const gain = ctx.createGain();
+                        osc.type = 'sine';
+                        osc.frequency.setValueAtTime(freq, now + i * 0.1);
+                        gain.gain.setValueAtTime(0.2, now + i * 0.1);
+                        gain.gain.exponentialRampToValueAtTime(0.01, now + i * 0.1 + 0.15);
+                        osc.connect(gain);
+                        gain.connect(ctx.destination);
+                        osc.start(now + i * 0.1);
+                        osc.stop(now + i * 0.1 + 0.15);
+                    });
+                } else if (type === 'error') {
+                    const osc = ctx.createOscillator();
+                    const gain = ctx.createGain();
+                    osc.type = 'sawtooth';
+                    osc.frequency.setValueAtTime(180, now);
+                    osc.frequency.linearRampToValueAtTime(110, now + 0.2);
+                    gain.gain.setValueAtTime(0.2, now);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.2);
+                    osc.connect(gain);
+                    gain.connect(ctx.destination);
+                    osc.start(now);
+                    osc.stop(now + 0.2);
+                } else if (type === 'win') {
+                    const notes = [261.63, 329.63, 392.00, 523.25];
+                    notes.forEach((freq, i) => {
+                        const osc = ctx.createOscillator();
+                        const gain = ctx.createGain();
+                        osc.type = 'triangle';
+                        osc.frequency.setValueAtTime(freq, now + i * 0.12);
+                        gain.gain.setValueAtTime(0.25, now + i * 0.12);
+                        gain.gain.exponentialRampToValueAtTime(0.01, now + i * 0.12 + 0.25);
+                        osc.connect(gain);
+                        gain.connect(ctx.destination);
+                        osc.start(now + i * 0.12);
+                        osc.stop(now + i * 0.12 + 0.25);
+                    });
+                }
+            } catch (e) {
+                console.warn("Audio playback issue:", e);
+            }
+        }
+
+        let availableVoices = [];
+        function populateVoices() {
+            if ('speechSynthesis' in window) {
+                availableVoices = window.speechSynthesis.getVoices();
+            }
+        }
+        if ('speechSynthesis' in window) {
+            populateVoices();
+            window.speechSynthesis.onvoiceschanged = populateVoices;
+        }
+
+        /* Text to Speech - Priority Google UK English Male */
+        function speakText(text) {
+            playSound('bubble');
+            if (!text) return;
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.rate = 0.85;
+
+                const voices = availableVoices.length > 0 ? availableVoices : window.speechSynthesis.getVoices();
+                
+                // Priority 1: Google UK English Male
+                let selectedVoice = voices.find(v => v.name.toLowerCase().includes('google uk english male'));
+
+                // Priority 2: Any UK Male Voice
+                if (!selectedVoice) {
+                    selectedVoice = voices.find(v => (v.lang === 'en-GB' || v.lang === 'en_GB') && 
+                        (v.name.toLowerCase().includes('male') || v.name.includes('George') || v.name.includes('Oliver') || v.name.includes('Daniel') || v.name.includes('Arthur')));
+                }
+
+                // Priority 3: Any UK Voice (en-GB)
+                if (!selectedVoice) {
+                    selectedVoice = voices.find(v => v.lang === 'en-GB' || v.lang === 'en_GB');
+                }
+
+                // Priority 4: Any English Male Voice
+                if (!selectedVoice) {
+                    selectedVoice = voices.find(v => v.lang.startsWith('en') && v.name.toLowerCase().includes('male'));
+                }
+
+                if (selectedVoice) {
+                    utterance.voice = selectedVoice;
+                    utterance.lang = selectedVoice.lang;
+                } else {
+                    utterance.lang = 'en-GB';
+                }
+
+                window.speechSynthesis.speak(utterance);
+            }
+        }
+
+        function speakActiveCrosswordClue() {
+            if (state.crosswordActiveClue) {
+                const phrase = state.crosswordActiveClue.phraseEn || state.crosswordActiveClue.word;
+                speakText(phrase);
+            }
+        }
+
+        function toggleSound() {
+            state.soundEnabled = !state.soundEnabled;
+            const icon = document.getElementById('soundIcon');
+            if (state.soundEnabled) {
+                icon.className = 'fa-solid fa-volume-high';
+                playSound('bubble');
+            } else {
+                icon.className = 'fa-solid fa-volume-xmark text-red-400';
+            }
+        }
+
+        function switchMode(mode) {
+            playSound('bubble');
+            state.activeMode = mode;
+
+            if (state.quizTimerInterval) {
+                clearInterval(state.quizTimerInterval);
+                state.quizTimerInterval = null;
+            }
+
+            // Reset tab styles
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('bg-slate-800', 'text-white', 'border', 'border-slate-700', 'shadow-md');
+                btn.classList.add('text-slate-400');
+            });
+
+            // Highlight selected tab
+            const activeTab = document.getElementById(`tab-${mode}`);
+            if (activeTab) {
+                activeTab.classList.add('bg-slate-800', 'text-white', 'border', 'border-slate-700', 'shadow-md');
+                activeTab.classList.remove('text-slate-400');
+            }
+
+            // Hide mode views
+            ['match', 'blanks', 'quiz', 'crossword'].forEach(m => {
+                const el = document.getElementById(`mode-${m}`);
+                if (el) {
+                    el.classList.add('hidden');
+                    el.classList.remove('flex');
+                }
+            });
+
+            // Display active view
+            const currentEl = document.getElementById(`mode-${mode}`);
+            if (currentEl) {
+                currentEl.classList.remove('hidden');
+                currentEl.classList.add('flex');
+            }
+
+            // Init game mode logic
+            if (mode === 'match') initMatchGame();
+            if (mode === 'blanks') initBlanksGame();
+            if (mode === 'quiz') initQuizGame();
+            if (mode === 'crossword') initCrosswordGame();
+        }
+
+        function addScore(points) {
+            state.score += points;
+            state.streak += 1;
+            document.getElementById('globalScore').textContent = state.score;
+            document.getElementById('globalStreak').textContent = state.streak;
+        }
+
+        function resetStreak() {
+            state.streak = 0;
+            document.getElementById('globalStreak').textContent = 0;
+        }
+
+        /* ==========================================================================
+           MODE 1: MATCHING GAME
+           ========================================================================== */
+        function initMatchGame() {
+            state.matchedPairs = 0;
+            state.matchMoves = 0;
+            state.selectedCards = [];
+            document.getElementById('matchMoves').textContent = '0';
+            
+            const shuffledItems = [...expressionsData].sort(() => 0.5 - Math.random()).slice(0, 6);
+            document.getElementById('matchPairsFound').textContent = `0/${shuffledItems.length}`;
+
+            let cards = [];
+            shuffledItems.forEach(item => {
+                cards.push({ id: item.id, text: item.english, lang: 'en', matched: false });
+                cards.push({ id: item.id, text: item.arabic, lang: 'ar', matched: false });
+            });
+
+            state.matchCards = cards.sort(() => 0.5 - Math.random());
+            renderMatchingGrid();
+        }
+
+        function renderMatchingGrid() {
+            const grid = document.getElementById('matchingGrid');
+            grid.innerHTML = '';
+
+            state.matchCards.forEach((card, idx) => {
+                const btn = document.createElement('button');
+                btn.className = `p-4 h-28 rounded-2xl border transition-all flex flex-col items-center justify-center text-center font-bold text-sm sm:text-base ${
+                    card.matched 
+                        ? 'bg-emerald-950/40 border-emerald-500/50 text-emerald-400 opacity-60 pointer-events-none' 
+                        : state.selectedCards.includes(idx)
+                            ? 'bg-emerald-500/20 border-emerald-400 text-white shadow-lg glow-green scale-105'
+                            : 'glass-card border-slate-700/80 hover:border-slate-500 text-slate-200 hover:bg-slate-800'
+                }`;
+
+                if (card.lang === 'en') {
+                    btn.classList.add('en-text');
+                }
+
+                btn.textContent = card.text;
+                btn.onclick = () => handleMatchCardClick(idx);
+                grid.appendChild(btn);
+            });
+        }
+
+        function handleMatchCardClick(index) {
+            if (state.selectedCards.length === 2 || state.selectedCards.includes(index) || state.matchCards[index].matched) return;
+
+            playSound('bubble');
+            state.selectedCards.push(index);
+            renderMatchingGrid();
+
+            if (state.selectedCards.length === 2) {
+                state.matchMoves++;
+                document.getElementById('matchMoves').textContent = state.matchMoves;
+
+                const [idx1, idx2] = state.selectedCards;
+                const card1 = state.matchCards[idx1];
+                const card2 = state.matchCards[idx2];
+
+                if (card1.id === card2.id && card1.lang !== card2.lang) {
+                    playSound('success');
+                    card1.matched = true;
+                    card2.matched = true;
+                    state.matchedPairs++;
+                    addScore(20);
+
+                    const totalPairs = state.matchCards.length / 2;
+                    document.getElementById('matchPairsFound').textContent = `${state.matchedPairs}/${totalPairs}`;
+
+                    state.selectedCards = [];
+                    renderMatchingGrid();
+
+                    if (state.matchedPairs === totalPairs) {
+                        setTimeout(() => {
+                            playSound('win');
+                            triggerConfetti();
+                            showModal("إنجاز رائع!", "لقد طابقت جميع كلمات الدرس الثالث بنجاح!", 120, "100%");
+                        }, 500);
+                    }
+                } else {
+                    playSound('error');
+                    resetStreak();
+                    setTimeout(() => {
+                        state.selectedCards = [];
+                        renderMatchingGrid();
+                    }, 800);
+                }
+            }
+        }
+
+        /* ==========================================================================
+           MODE 2: FILL IN THE BLANKS (PREPOSITIONS)
+           ========================================================================== */
+        function initBlanksGame() {
+            state.blankIndex = 0;
+            renderBlankQuestion();
+        }
+
+        function renderBlankQuestion() {
+            const item = expressionsData[state.blankIndex];
+            
+            const progressPct = ((state.blankIndex + 1) / expressionsData.length) * 100;
+            document.getElementById('blanksProgressBar').style.width = `${progressPct}%`;
+
+            document.getElementById('blankSentence').textContent = item.blank;
+            document.getElementById('blankArabicHint').textContent = `الترجمة: ${item.arabic}`;
+            document.getElementById('blankNextBtn').classList.add('hidden');
+
+            const options = [item.prep, ...item.distractors].sort(() => 0.5 - Math.random());
+
+            const container = document.getElementById('blankOptions');
+            container.innerHTML = '';
+
+            options.forEach(opt => {
+                const btn = document.createElement('button');
+                btn.className = "en-text p-4 rounded-2xl glass-card border border-slate-700/80 hover:border-purple-400/80 hover:bg-slate-800 text-white font-black text-lg transition-all active:scale-95";
+                btn.textContent = opt;
+                btn.onclick = () => checkBlankAnswer(opt, item.prep, btn);
+                container.appendChild(btn);
+            });
+        }
+
+        function checkBlankAnswer(selected, correct, buttonEl) {
+            const allBtns = document.getElementById('blankOptions').children;
+            for (let b of allBtns) {
+                b.disabled = true;
+            }
+
+            if (selected === correct) {
+                playSound('success');
+                addScore(15);
+                buttonEl.className = "en-text p-4 rounded-2xl bg-emerald-600 border border-emerald-400 text-white font-black text-lg shadow-lg glow-green animate-bounce";
+                
+                const item = expressionsData[state.blankIndex];
+                document.getElementById('blankSentence').textContent = item.english;
+                speakText(item.english);
+            } else {
+                playSound('error');
+                resetStreak();
+                buttonEl.className = "en-text p-4 rounded-2xl bg-red-600 border border-red-400 text-white font-black text-lg";
+                
+                for (let b of allBtns) {
+                    if (b.textContent === correct) {
+                        b.className = "en-text p-4 rounded-2xl bg-emerald-600/80 border border-emerald-400 text-white font-black text-lg";
+                    }
+                }
+            }
+
+            document.getElementById('blankNextBtn').classList.remove('hidden');
+        }
+
+        function nextBlankQuestion() {
+            playSound('bubble');
+            state.blankIndex++;
+            if (state.blankIndex >= expressionsData.length) {
+                playSound('win');
+                triggerConfetti();
+                showModal("أحسنت صنعاً!", "أكملت اختبار حروف الجر وتعبيرات الدرس الثالث بنجاح!", 150, "100%");
+                state.blankIndex = 0;
+            }
+            renderBlankQuestion();
+        }
+
+        /* ==========================================================================
+           MODE 3: SPEED QUIZ
+           ========================================================================== */
+        function initQuizGame() {
+            state.quizIndex = 0;
+            state.quizQuestions = [...expressionsData].sort(() => 0.5 - Math.random()).map(item => {
+                const isEnToAr = Math.random() > 0.5;
+                const promptText = isEnToAr ? item.english : item.arabic;
+                const correctAnswer = isEnToAr ? item.arabic : item.english;
+                
+                const otherOptions = expressionsData
+                    .filter(e => e.id !== item.id)
+                    .map(e => isEnToAr ? e.arabic : e.english)
+                    .sort(() => 0.5 - Math.random())
+                    .slice(0, 3);
+                    
+                const options = [correctAnswer, ...otherOptions].sort(() => 0.5 - Math.random());
+                return {
+                    promptText,
+                    correctAnswer,
+                    options,
+                    isEnToAr
+                };
+            });
+            renderQuizQuestion();
+        }
+
+        function renderQuizQuestion() {
+            if (state.quizTimerInterval) clearInterval(state.quizTimerInterval);
+            
+            if (state.quizIndex >= state.quizQuestions.length) {
+                playSound('win');
+                triggerConfetti();
+                showModal("تحدي ممتاز! ⚡", "أكملت جميع أسئلة الدرس الثالث في التحدي السريع بنجاح!", 150, "100%");
+                return;
+            }
+            
+            const q = state.quizQuestions[state.quizIndex];
+            document.getElementById('quizQuestionNum').textContent = `${state.quizIndex + 1} / ${state.quizQuestions.length}`;
+            document.getElementById('quizQuestionType').textContent = q.isEnToAr ? "ترجم التعبير الآتي إلى العربية" : "اختر التعبير الإنجليزي المناسب";
+            document.getElementById('quizPrompt').textContent = q.promptText;
+            if (q.isEnToAr) {
+                document.getElementById('quizPrompt').classList.add('en-text');
+            } else {
+                document.getElementById('quizPrompt').classList.remove('en-text');
+            }
+            
+            const optionsContainer = document.getElementById('quizOptions');
+            optionsContainer.innerHTML = '';
+            
+            q.options.forEach(opt => {
+                const btn = document.createElement('button');
+                btn.className = "w-full p-4 rounded-2xl glass-card border border-slate-700/80 hover:border-amber-400/80 hover:bg-slate-800 text-white font-bold text-base transition-all active:scale-95 text-center";
+                if (!q.isEnToAr) {
+                    btn.classList.add('en-text');
+                }
+                btn.textContent = opt;
+                btn.onclick = () => checkQuizAnswer(opt, q.correctAnswer, btn);
+                optionsContainer.appendChild(btn);
+            });
+
+            startQuizTimer();
+        }
+
+        function startQuizTimer() {
+            state.quizTimeLeft = 20;
+            document.getElementById('quizTimer').textContent = `${state.quizTimeLeft}s`;
+            
+            state.quizTimerInterval = setInterval(() => {
+                state.quizTimeLeft--;
+                document.getElementById('quizTimer').textContent = `${state.quizTimeLeft}s`;
+                if (state.quizTimeLeft <= 0) {
+                    clearInterval(state.quizTimerInterval);
+                    playSound('error');
+                    resetStreak();
+                    state.quizIndex++;
+                    renderQuizQuestion();
+                }
+            }, 1000);
+        }
+
+        function checkQuizAnswer(selected, correct, btnEl) {
+            if (state.quizTimerInterval) clearInterval(state.quizTimerInterval);
+            
+            const allBtns = document.getElementById('quizOptions').children;
+            for (let b of allBtns) {
+                b.disabled = true;
+            }
+            
+            if (selected === correct) {
+                playSound('success');
+                addScore(25);
+                btnEl.className = "w-full p-4 rounded-2xl bg-emerald-600 border border-emerald-400 text-white font-bold text-base shadow-lg glow-green animate-bounce";
+            } else {
+                playSound('error');
+                resetStreak();
+                btnEl.className = "w-full p-4 rounded-2xl bg-red-600 border border-red-400 text-white font-bold text-base";
+                for (let b of allBtns) {
+                    if (b.textContent === correct) {
+                        b.className = "w-full p-4 rounded-2xl bg-emerald-600/80 border border-emerald-400 text-white font-bold text-base";
+                    }
+                }
+            }
+            
+            setTimeout(() => {
+                state.quizIndex++;
+                renderQuizQuestion();
+            }, 1200);
+        }
+
+        function currentQuizQuestion() {
+            return state.quizQuestions[state.quizIndex] || { promptText: "" };
+        }
+
+        /* ==========================================================================
+           MODE 4: ENHANCED CROSSWORD PUZZLE ENGINE
+           ========================================================================== */
+        function initCrosswordGame() {
+            state.crosswordUserInputs = {};
+            state.solvedWordIds = new Set();
+            state.crosswordActiveClue = crosswordWords[0];
+            state.crosswordActiveCell = { r: crosswordWords[0].row, c: crosswordWords[0].col };
+
+            createCrosswordDOM();
+            renderCrosswordBoard();
+            renderCrosswordClues();
+            renderVirtualKeyboard();
+            updateCrosswordStats();
+        }
+
+        function getCrosswordGridMap() {
+            const grid = Array(10).fill(null).map(() => Array(10).fill(null));
+
+            crosswordWords.forEach(w => {
+                for (let i = 0; i < w.word.length; i++) {
+                    const r = w.dir === 'down' ? w.row + i : w.row;
+                    const c = w.dir === 'across' ? w.col + i : w.col;
+
+                    if (!grid[r][c]) {
+                        grid[r][c] = {
+                            letter: w.word[i],
+                            words: [],
+                            number: null
+                        };
+                    }
+                    grid[r][c].words.push(w);
+                    if (i === 0 && (!grid[r][c].number || w.number < grid[r][c].number)) {
+                        grid[r][c].number = w.number;
+                    }
+                }
+            });
+
+            return grid;
+        }
+
+        function createCrosswordDOM() {
+            const container = document.getElementById('crosswordGrid');
+            if (!container) return;
+            container.innerHTML = '';
+            const gridMap = getCrosswordGridMap();
+
+            for (let r = 0; r < 10; r++) {
+                for (let c = 0; c < 10; c++) {
+                    const cellData = gridMap[r][c];
+                    const cellDiv = document.createElement('div');
+                    cellDiv.id = `cw_cell_${r}_${c}`;
+
+                    if (!cellData) {
+                        cellDiv.className = "bg-slate-950/90 rounded-xl border border-slate-900/60";
+                    } else {
+                        cellDiv.className = "relative rounded-xl border flex items-center justify-center font-black text-base transition-all cursor-pointer bg-slate-800/90 border-slate-700 text-slate-100 hover:border-slate-500";
+
+                        if (cellData.number) {
+                            const numSpan = document.createElement('span');
+                            numSpan.id = `cw_num_${r}_${c}`;
+                            numSpan.className = "absolute top-0.5 right-1 text-[9px] font-bold leading-none pointer-events-none select-none text-amber-400";
+                            numSpan.textContent = cellData.number;
+                            cellDiv.appendChild(numSpan);
+                        }
+
+                        const input = document.createElement('input');
+                        input.type = 'text';
+                        input.maxLength = 1;
+                        input.id = `cw_${r}_${c}`;
+                        input.value = '';
+                        // إعدادات محسنة لتشغيل لوحة المفاتيح المدمجة بالهاتف والكمبيوتر
+                        input.setAttribute('autocomplete', 'off');
+                        input.setAttribute('autocorrect', 'off');
+                        input.setAttribute('autocapitalize', 'characters');
+                        input.setAttribute('spellcheck', 'false');
+                        input.setAttribute('inputmode', 'text');
+                        input.setAttribute('dir', 'ltr');
+                        input.className = "w-full h-full bg-transparent text-center font-extrabold text-base sm:text-lg uppercase focus:outline-none en-text cursor-pointer p-0";
+
+                        input.onclick = (e) => {
+                            e.stopPropagation();
+                            handleCellClick(r, c, cellData);
+                        };
+
+                        input.onfocus = () => {
+                            handleCellClick(r, c, cellData, false);
+                        };
+
+                        input.oninput = (e) => handleCrosswordInput(r, c, e.target.value);
+                        input.onkeydown = (e) => handleCrosswordKeyDown(r, c, e);
+
+                        cellDiv.appendChild(input);
+                    }
+                    container.appendChild(cellDiv);
+                }
+            }
+        }
+
+        function renderCrosswordBoard() {
+            const container = document.getElementById('crosswordGrid');
+            if (!container || !container.children.length) {
+                createCrosswordDOM();
+            }
+
+            const gridMap = getCrosswordGridMap();
+            const activeClue = state.crosswordActiveClue;
+            const activeCell = state.crosswordActiveCell;
+
+            for (let r = 0; r < 10; r++) {
+                for (let c = 0; c < 10; c++) {
+                    const cellData = gridMap[r][c];
+                    const cellDiv = document.getElementById(`cw_cell_${r}_${c}`);
+                    if (!cellData || !cellDiv) continue;
+
+                    const isExactActiveCell = (r === activeCell.r && c === activeCell.c);
+                    const isInActiveWord = activeClue && cellData.words.some(w => w.id === activeClue.id);
+                    const isCellSolved = cellData.words.some(w => isWordSolved(w));
+
+                    cellDiv.className = `relative rounded-xl border flex items-center justify-center font-black text-base transition-all cursor-pointer ${
+                        isExactActiveCell
+                            ? 'bg-cyan-400 border-white text-slate-950 shadow-lg glow-cyan scale-105 z-20'
+                            : isInActiveWord
+                                ? 'bg-amber-500/25 border-amber-400 text-amber-200 shadow-md glow-amber'
+                                : isCellSolved
+                                    ? 'bg-emerald-950/60 border-emerald-500/50 text-emerald-300'
+                                    : 'bg-slate-800/90 border-slate-700 text-slate-100 hover:border-slate-500'
+                    }`;
+
+                    const numSpan = document.getElementById(`cw_num_${r}_${c}`);
+                    if (numSpan) {
+                        numSpan.className = `absolute top-0.5 right-1 text-[9px] font-bold leading-none pointer-events-none select-none ${
+                            isExactActiveCell ? 'text-slate-950' : 'text-amber-400'
+                        }`;
+                    }
+
+                    const input = document.getElementById(`cw_${r}_${c}`);
+                    if (input) {
+                        const key = `${r}_${c}`;
+                        const val = state.crosswordUserInputs[key] || '';
+                        if (input.value !== val) {
+                            input.value = val;
+                        }
+                        input.className = `w-full h-full bg-transparent text-center font-extrabold text-base sm:text-lg uppercase focus:outline-none en-text cursor-pointer p-0 ${
+                            isExactActiveCell ? 'text-slate-950 font-black' : 'text-white'
+                        }`;
+                    }
+                }
+            }
+
+            if (activeClue) {
+                const badge = document.getElementById('cwActiveClueBadge');
+                const text = document.getElementById('cwActiveClueText');
+                if (badge) badge.textContent = `${activeClue.number} ${activeClue.dir === 'across' ? 'أفقياً' : 'رأسياً'}`;
+                if (text) text.textContent = activeClue.clue;
+            }
+        }
+
+        function handleCellClick(r, c, cellData, shouldFocus = true) {
+            const currentActiveCell = state.crosswordActiveCell;
+            const currentClue = state.crosswordActiveClue;
+
+            if (currentActiveCell.r === r && currentActiveCell.c === c && cellData.words.length > 1) {
+                const otherClue = cellData.words.find(w => w.id !== currentClue.id);
+                if (otherClue) {
+                    state.crosswordActiveClue = otherClue;
+                }
+            } else {
+                state.crosswordActiveCell = { r, c };
+                if (!currentClue || !cellData.words.some(w => w.id === currentClue.id)) {
+                    state.crosswordActiveCell = cellData.words[0];
+                }
+            }
+
+            renderCrosswordBoard();
+            renderCrosswordClues();
+
+            if (shouldFocus) {
+                const inputEl = document.getElementById(`cw_${r}_${c}`);
+                if (inputEl && document.activeElement !== inputEl) {
+                    inputEl.focus();
+                }
+            }
+        }
+
+        function toggleCrosswordDirection() {
+            playSound('bubble');
+            const { r, c } = state.crosswordActiveCell;
+            const gridMap = getCrosswordGridMap();
+            const cellData = gridMap[r][c];
+
+            if (cellData && cellData.words.length > 1) {
+                const currentClue = state.crosswordActiveClue;
+                const nextClue = cellData.words.find(w => w.id !== currentClue.id) || cellData.words[0];
+                state.crosswordActiveClue = nextClue;
+            } else {
+                const currentDir = state.crosswordActiveClue ? state.crosswordActiveClue.dir : 'across';
+                const nextDir = currentDir === 'across' ? 'down' : 'across';
+                const found = crosswordWords.find(w => w.dir === nextDir);
+                if (found) selectCrosswordClue(found);
+            }
+            renderCrosswordBoard();
+            renderCrosswordClues();
+        }
+
+        function renderCrosswordClues() {
+            const acrossContainer = document.getElementById('cwAcrossClues');
+            const downContainer = document.getElementById('cwDownClues');
+
+            acrossContainer.innerHTML = '';
+            downContainer.innerHTML = '';
+
+            crosswordWords.forEach(w => {
+                const isSolved = isWordSolved(w);
+                const isActive = state.crosswordActiveClue && state.crosswordActiveClue.id === w.id;
+
+                const div = document.createElement('div');
+                div.className = `p-2.5 rounded-xl border text-xs sm:text-sm font-semibold transition-all cursor-pointer flex items-center justify-between gap-2 ${
+                    isActive
+                        ? 'bg-amber-500/25 border-amber-400 text-amber-200 shadow-md glow-amber'
+                        : isSolved
+                            ? 'bg-emerald-950/40 border-emerald-500/40 text-emerald-300 line-through'
+                            : 'bg-slate-900/60 border-slate-800 text-slate-300 hover:bg-slate-800 hover:text-white'
+                }`;
+
+                div.onclick = () => selectCrosswordClue(w);
+
+                const phraseToSpeak = (w.phraseEn || w.word).replace(/'/g, "\\'");
+
+                div.innerHTML = `
+                    <div class="flex items-center gap-2 overflow-hidden">
+                        <span class="w-5 h-5 rounded-md bg-slate-800 border border-slate-700 flex items-center justify-center text-xs font-bold text-amber-400 shrink-0">${w.number}</span>
+                        <span class="truncate">${w.clue}</span>
+                    </div>
+                    <div class="flex items-center gap-1.5 shrink-0">
+                        <button onclick="event.stopPropagation(); speakText('${phraseToSpeak}')" class="w-7 h-7 rounded-lg bg-slate-800 hover:bg-amber-400 hover:text-slate-950 text-amber-400 transition-all flex items-center justify-center text-xs border border-slate-700" title="نطق بالبريطاني">
+                            <i class="fa-solid fa-volume-high"></i>
+                        </button>
+                        ${isSolved ? '<i class="fa-solid fa-circle-check text-emerald-400 text-sm"></i>' : ''}
+                    </div>
+                `;
+
+                if (w.dir === 'across') {
+                    acrossContainer.appendChild(div);
+                } else {
+                    downContainer.appendChild(div);
+                }
+            });
+        }
+
+        function selectCrosswordClue(clueObj) {
+            playSound('bubble');
+            state.crosswordActiveClue = clueObj;
+            
+            let targetCell = { r: clueObj.row, c: clueObj.col };
+            for (let i = 0; i < clueObj.word.length; i++) {
+                const r = clueObj.dir === 'down' ? clueObj.row + i : clueObj.row;
+                const c = clueObj.dir === 'across' ? clueObj.col + i : clueObj.col;
+                if (!state.crosswordUserInputs[`${r}_${c}`]) {
+                    targetCell = { r, c };
+                    break;
+                }
+            }
+            state.crosswordActiveCell = targetCell;
+
+            renderCrosswordBoard();
+            renderCrosswordClues();
+
+            const el = document.getElementById(`cw_${targetCell.r}_${targetCell.c}`);
+            if (el) el.focus();
+        }
+
+        function handleCrosswordInput(r, c, rawVal) {
+            const val = rawVal ? rawVal.trim().slice(-1).toUpperCase() : '';
+            const key = `${r}_${c}`;
+            state.crosswordUserInputs[key] = val;
+
+            playSound('bubble');
+
+            const activeClue = state.crosswordActiveClue;
+            
+            if (activeClue && !state.solvedWordIds.has(activeClue.id)) {
+                if (isWordSolved(activeClue)) {
+                    state.solvedWordIds.add(activeClue.id);
+                    playSound('success');
+                    addScore(25);
+                }
+            }
+
+            updateCrosswordStats();
+
+            if (val && activeClue) {
+                let nextR = r;
+                let nextC = c;
+                if (activeClue.dir === 'across') nextC++;
+                if (activeClue.dir === 'down') nextR++;
+
+                const isWithinWord = (activeClue.dir === 'across') 
+                    ? (nextC < activeClue.col + activeClue.word.length) 
+                    : (nextR < activeClue.row + activeClue.word.length);
+
+                if (isWithinWord) {
+                    state.crosswordActiveCell = { r: nextR, c: nextC };
+                    renderCrosswordBoard();
+                    const nextEl = document.getElementById(`cw_${nextR}_${nextC}`);
+                    if (nextEl) nextEl.focus();
+                } else {
+                    renderCrosswordBoard();
+                }
+            } else {
+                renderCrosswordBoard();
+            }
+
+            checkCrosswordSolution(false);
+        }
+
+        function handleCrosswordKeyDown(r, c, e) {
+            const activeClue = state.crosswordActiveClue;
+            if (!activeClue) return;
+
+            if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.key)) {
+                e.preventDefault();
+                let targetR = r;
+                let targetC = c;
+
+                if (e.key === 'ArrowUp') targetR--;
+                if (e.key === 'ArrowDown') targetR++;
+                if (e.key === 'ArrowLeft') targetC--;
+                if (e.key === 'ArrowRight') targetC++;
+
+                const targetEl = document.getElementById(`cw_${targetR}_${targetC}`);
+                if (targetEl) {
+                    state.crosswordActiveCell = { r: targetR, c: targetC };
+                    renderCrosswordBoard();
+                    targetEl.focus();
+                }
+                return;
+            }
+
+            if (e.key === 'Backspace') {
+                const key = `${r}_${c}`;
+                const inputEl = document.getElementById(`cw_${r}_${c}`);
+                if (!inputEl || !inputEl.value) {
+                    let prevR = r;
+                    let prevC = c;
+
+                    if (activeClue.dir === 'across') prevC--;
+                    if (activeClue.dir === 'down') prevR--;
+
+                    const prevEl = document.getElementById(`cw_${prevR}_${prevC}`);
+                    if (prevEl) {
+                        state.crosswordActiveCell = { r: prevR, c: prevC };
+                        state.crosswordUserInputs[`${prevR}_${prevC}`] = '';
+                        renderCrosswordBoard();
+                        updateCrosswordStats();
+                        prevEl.focus();
+                    }
+                }
+            }
+        }
+
+        function renderVirtualKeyboard() {
+            const kbContainer = document.getElementById('virtualKb');
+            kbContainer.innerHTML = '';
+
+            const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            for (let char of alphabet) {
+                const btn = document.createElement('button');
+                btn.className = "w-7 h-8 sm:w-8 sm:h-9 bg-slate-800 hover:bg-slate-700 text-white font-black text-xs sm:text-sm rounded-lg border border-slate-700 active:scale-95 transition-all flex items-center justify-center en-text";
+                btn.textContent = char;
+                btn.onclick = () => {
+                    const { r, c } = state.crosswordActiveCell;
+                    const inputEl = document.getElementById(`cw_${r}_${c}`);
+                    if (inputEl) {
+                        inputEl.value = char;
+                        handleCrosswordInput(r, c, char);
+                    }
+                };
+                kbContainer.appendChild(btn);
+            }
+
+            const backBtn = document.createElement('button');
+            backBtn.className = "px-3 h-8 sm:h-9 bg-red-900/60 hover:bg-red-800 text-red-200 font-bold text-xs rounded-lg border border-red-700/60 active:scale-95 transition-all flex items-center justify-center gap-1";
+            backBtn.innerHTML = '<i class="fa-solid fa-delete-left"></i> مسح';
+            backBtn.onclick = () => {
+                const { r, c } = state.crosswordActiveCell;
+                const inputEl = document.getElementById(`cw_${r}_${c}`);
+                if (inputEl) {
+                    inputEl.value = '';
+                    handleCrosswordInput(r, c, '');
+                }
+            };
+            kbContainer.appendChild(backBtn);
+        }
+
+        function isWordSolved(w) {
+            for (let i = 0; i < w.word.length; i++) {
+                const r = w.dir === 'down' ? w.row + i : w.row;
+                const c = w.dir === 'across' ? w.col + i : w.col;
+                const userChar = state.crosswordUserInputs[`${r}_${c}`];
+                if (!userChar || userChar.toUpperCase() !== w.word[i]) {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        function updateCrosswordStats() {
+            let solvedCount = 0;
+            crosswordWords.forEach(w => {
+                if (isWordSolved(w)) solvedCount++;
+            });
+
+            document.getElementById('cwCompletedCount').textContent = `${solvedCount} / ${crosswordWords.length}`;
+            renderCrosswordClues();
+        }
+
+        function checkCrosswordSolution(showFeedback = true) {
+            let solvedCount = 0;
+
+            crosswordWords.forEach(w => {
+                if (isWordSolved(w)) {
+                    solvedCount++;
+                }
+            });
+
+            if (solvedCount === crosswordWords.length) {
+                playSound('win');
+                triggerConfetti();
+                addScore(200);
+                showModal("إنجاز استثنائي! 🏆", "حللت الكلمات المتقاطعة للدرس الثالث بالكامل بنجاح!", 200, "100%");
+            } else if (showFeedback) {
+                playSound('success');
+                showModal("تقدم رائع! ✏️", `لقد حللت ${solvedCount} من أصل ${crosswordWords.length} كلمات بشكل صحيح. استمر!`, 50, `${Math.round((solvedCount / crosswordWords.length) * 100)}%`);
+            }
+        }
+
+        function giveCrosswordHint() {
+            const { r, c } = state.crosswordActiveCell;
+            const gridMap = getCrosswordGridMap();
+            const cellData = gridMap[r][c];
+
+            if (cellData) {
+                playSound('bubble');
+                const correctChar = cellData.letter;
+                state.crosswordUserInputs[`${r}_${c}`] = correctChar;
+                renderCrosswordBoard();
+                updateCrosswordStats();
+
+                const el = document.getElementById(`cw_${r}_${c}`);
+                if (el) el.focus();
+            }
+        }
+
+        function revealCrosswordWord() {
+            if (!state.crosswordActiveClue) return;
+            const clue = state.crosswordActiveClue;
+            playSound('bubble');
+
+            for (let i = 0; i < clue.word.length; i++) {
+                const r = clue.dir === 'down' ? clue.row + i : clue.row;
+                const c = clue.dir === 'across' ? clue.col + i : clue.col;
+                state.crosswordUserInputs[`${r}_${c}`] = clue.word[i];
+            }
+
+            state.solvedWordIds.add(clue.id);
+            renderCrosswordBoard();
+            updateCrosswordStats();
+            checkCrosswordSolution(false);
+        }
+
+        function triggerConfetti() {
+            const canvas = document.getElementById('confettiCanvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            
+            const particles = [];
+            const colors = ['#22c55e', '#a855f7', '#f59e0b', '#06b6d4', '#ec4899', '#3b82f6'];
+            for (let i = 0; i < 100; i++) {
+                particles.push({
+                    x: canvas.width / 2,
+                    y: canvas.height / 2,
+                    vx: (Math.random() - 0.5) * 12,
+                    vy: (Math.random() - 0.8) * 14,
+                    color: colors[Math.floor(Math.random() * colors.length)],
+                    radius: Math.random() * 6 + 3,
+                    alpha: 1,
+                    decay: Math.random() * 0.02 + 0.01
+                });
+            }
+
+            function animateConfetti() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                let alive = false;
+                particles.forEach(p => {
+                    if (p.alpha > 0) {
+                        alive = true;
+                        p.x += p.vx;
+                        p.y += p.vy;
+                        p.vy += 0.3;
+                        p.alpha -= p.decay;
+                        ctx.save();
+                        ctx.globalAlpha = Math.max(0, p.alpha);
+                        ctx.beginPath();
+                        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                        ctx.fillStyle = p.color;
+                        ctx.fill();
+                        ctx.restore();
+                    }
+                });
+                if (alive) {
+                    requestAnimationFrame(animateConfetti);
+                }
+            }
+            animateConfetti();
+        }
+
+        function showModal(title, desc, score, accuracy) {
+            document.getElementById('modalTitle').textContent = title;
+            document.getElementById('modalDescription').textContent = desc;
+            document.getElementById('modalScore').textContent = `+${score}`;
+            document.getElementById('modalAccuracy').textContent = accuracy;
+            document.getElementById('gameModal').classList.remove('hidden');
+        }
+
+        function closeModal() {
+            playSound('bubble');
+            document.getElementById('gameModal').classList.add('hidden');
+        }
+
+        window.onload = function () {
+            switchMode('match');
+        };
+    </script>
+</body>
+</html>
